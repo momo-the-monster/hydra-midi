@@ -1,9 +1,6 @@
 let eventNames = require('./models/eventNames').names;
 let models = require('./models/models.js');
 let hydra = require('./hydra/hydra.js');
-let ndarray = require('ndarray');
-let colorString = require('color-string');
-let NDPixels = require('ndpixels');
 var roomStorage = require('node-persist');
 
 function init(){
@@ -44,30 +41,22 @@ module.exports.respond = function(io, socket){
     }
     */
 
-    socket.on(eventNames.pixelUpdate, function(value){
+    socket.on(eventNames.noteOn, function(value){
        if(socket.game !== null && (typeof(socket.game) !== "undefined")){
-           //io.sockets.to(socket.game.adminID).emit(eventNames.pixelUpdate, socket.username, value);
            if(socket.game.roomID){
-               // broadcast pixel update to room
-               io.sockets.to(socket.game.roomID).emit(eventNames.pixelUpdate, socket.username, value);
-
-               // update pixel store on socket.game
-               let color = colorString.get.rgb(value.rgba);
-               socket.game.pixels.set(value.row, value.col, 0, color[0]);
-               socket.game.pixels.set(value.row, value.col, 1, color[1]);
-               socket.game.pixels.set(value.row, value.col, 2, color[2]);
-
-               roomStorage.setItem(socket.game.roomID,socket.game.pixels.data);
+               // broadcast midi update to room
+               socket.broadcast.to(socket.game.roomID).emit(eventNames.noteOn, value);
            }
-         var ledRoom = socket.game.roomID + "LED";
-     //    if(socket.game.ledRoom){
-           let color = colorString.get.rgb(value.rgba);
-        //   io.sockets.to(ledRoom).emit(eventNames.pixelUpdateLed, "" + value.row + "," + value.col + "," + color[0]+ "," +  color[1]+ "," +  color[2]  );
-           io.sockets.to(ledRoom).emit("pixelbin", new Buffer([value.row, value.col, color[0], color[1], color[2]]));
-         //console.log("sending x");
-        //   console.log("sending pixelUpdate with " + value.row + "," + value.col + "," + color[0]+ "," +  color[1]+ "," +  color[2]);
-       //  }
        }
+    });
+
+    socket.on(eventNames.noteOff, function(value){
+        if(socket.game !== null && (typeof(socket.game) !== "undefined")){
+            if(socket.game.roomID){
+                // broadcast midi update to room
+                socket.broadcast.to(socket.game.roomID).emit(eventNames.noteOff, value);
+            }
+        }
     });
   
     socket.on('subscribeToPixels', function(){
@@ -78,12 +67,6 @@ module.exports.respond = function(io, socket){
       socket.join(roomID);
       sendCurrentPixelsToLed(socket, pixels);
     });
-  
-  socket.on('getCurrentPixels', function(){
-    var pixels = (roomStorage.getItemSync('PIXEL'));
-      //socket.game = hydra.games[roomID];
-      sendCurrentPixelsToLed(socket, pixels);
-  });
   
   function sendCurrentPixelsToLed(socket, pixels){
 
@@ -116,14 +99,14 @@ module.exports.respond = function(io, socket){
         if(io.sockets.adapter.rooms[roomID]){
             socket.game = hydra.games[roomID];
             socket.join(roomID);
-            fn({'success':true, 'pixels':socket.game.pixels.data});
+            fn({'success':true});
             console.log('player joins ' + roomID);
         } else {
             console.log('player makes ' + roomID);
             socket.game = hydra.createGame(roomID, socket.id);
             startGame(socket.game, roomID);
             socket.join(roomID);
-            fn({'success':true, 'pixels':socket.game.pixels.data});
+            fn({'success':true});
         }
     });
 
@@ -144,20 +127,9 @@ module.exports.respond = function(io, socket){
         }
     });
 
-    function startGame(game, roomID) {
+    function startGame(game) {
         game.numPlayers = 0;
-        game.name = "pixel-sketch";
+        game.name = "pixel-midi";
         game.inProgress = false;
-
-        // construct pixel array
-        let width = 16;
-        let height = 16;
-        let numChannels = 3;
-        let blackPixelArray = new Uint8ClampedArray(width * height * numChannels);
-        socket.game.pixels = ndarray(blackPixelArray,[width,height,numChannels]);
-        var pixels = (roomStorage.getItemSync(roomID));
-        if(pixels != null && (typeof(pixels) !== "undefined")){
-            socket.game.pixels.data = pixels;
-        }
     }
 };

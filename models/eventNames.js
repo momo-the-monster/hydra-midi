@@ -1,9 +1,9 @@
 exports.names = {
-    svgUpdate           : 'svgUpdate',
-    pixelUpdate         : 'pixelUpdate',
+    noteOn              : 'noteOn',
+    noteOff             : 'noteOff',
     viewerJoinRoom      : 'viewerJoinRoom',
     adminLogin          : 'adminLogin',
     adminLoginToRoom    : 'adminLoginToRoom',
-    playerJointRoom : 'playerJoinRoom',
+    playerJoinRoom : 'playerJoinRoom',
     pixelUpdateLed  :   'pixelUpdateLed'
 };

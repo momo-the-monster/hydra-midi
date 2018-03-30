@@ -2,11 +2,11 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
-    res.redirect('/view?room=pixel');
+    res.redirect('/view?room=surya');
 });
 
 router.get('/view', function(req, res, next) {
-    res.render('pixel', { title: 'Hydra Pixel' });
+    res.render('midi', { title: 'Hydra Midi' });
 });
 
 router.get(['/admin', '/host'], function(req, res, next) {
