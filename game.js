@@ -50,51 +50,19 @@ module.exports.respond = function(io, socket){
        }
     });
 
-    socket.on(eventNames.noteOff, function(value){
+    socket.on(eventNames.rawMidi, function(value){
         if(socket.game !== null && (typeof(socket.game) !== "undefined")){
             if(socket.game.roomID){
+            //    console.dir(value);
                 // broadcast midi update to room
-                socket.broadcast.to(socket.game.roomID).emit(eventNames.noteOff, value);
+                socket.broadcast.to(socket.game.roomID).emit(eventNames.rawMidi, new Buffer(value));
             }
         }
     });
-  
-    socket.on('subscribeToPixels', function(){
-      console.log('heard subscribeToPixels');
-      var roomID = 'PIXELLED';
-      var pixels = (roomStorage.getItemSync('PIXEL'));
-      //socket.game = hydra.games[roomID];
-      socket.join(roomID);
-      sendCurrentPixelsToLed(socket, pixels);
-    });
-  
-  function sendCurrentPixelsToLed(socket, pixels){
-
-    var interval = 25;
-    
-    for(let row = 0; row < 16; row++){
-      for(let col = 0; col < 16; col++){
-        //console.log('row is ' + row + ' / ' + col);
-        
-        let i = (row * 16) + col;
-        
-        setTimeout( function (i) {
-          var offset = i * 3;
-          let red = pixels[offset];
-          let green = pixels[offset + 1];
-          let blue = pixels[offset + 2];
-          let dataString = "" + row + "," + col + "," + red + "," +  green + "," +  blue;
-        //  io.sockets.to(socket.id).emit(eventNames.pixelUpdateLed, dataString );
-          io.sockets.to(socket.id).emit("pixelbin", new Buffer([row, col, red, green, blue]));  
-        }, interval * i, i);
-        
-      }
-    }
-    
-  }
 
     socket.on('playerJoinRoom', function (roomID, fn){
         roomID = roomID.toUpperCase();
+        fn = fn || function(){};
         // If room exists, add user to room and game. store reference to game in user socket
         if(io.sockets.adapter.rooms[roomID]){
             socket.game = hydra.games[roomID];

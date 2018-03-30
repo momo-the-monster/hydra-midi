@@ -137,10 +137,12 @@ function playerJoinRoom(name) {
 
 function sendPlayNote(number, channel, rawVelocity){
     socket.emit('noteOn', {number:number, channel:channel, velocity:rawVelocity});
+    socket.emit('rawMidi', [number, channel, rawVelocity]);
 }
 
 function sendReleaseNote(number, channel){
     socket.emit('noteOff', {number:number, channel:channel});
+    socket.emit('rawMidi', [number, channel, 0]);
 }
 
 function initSocket(){
