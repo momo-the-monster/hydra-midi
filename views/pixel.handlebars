@@ -1,0 +1,62 @@
+<link rel="stylesheet" href="pixelpad/stylesheets/css/main.css">
+<link rel="stylesheet" href="stylesheets/palette.css">
+<main id="main-container">
+    <section id="control-section" class="control-section-visible">
+
+        <div id="control-panel">
+            <div class="control-panel-row light-gray">
+                <div id="paint-preview">&nbsp;</div>
+            </div>
+            <div id="palette">
+                <label class="form-label">Active Color<br /></label>
+            </div>
+            <div class="control-panel-row">
+                <div class="control-panel-form-group row-item-1-3">
+                    <label for="paint-color-input" class="form-label">Add Color</label>
+                    <input id="paint-color-input" class="input-block"
+                           type="color"
+                           value="#0080ff">
+                </div>
+                <div class="control-panel-form-group row-item-1-3" style="text-align: center;">
+                    <label for="eyedropper" class="form-label">Eyedropper</label>
+                    <label class="switch">
+                        <input type="checkbox" id="eyedropperCheckbox">
+                        <span class="toggleSlider round"></span>
+                    </label>
+                </div>
+                <div class="control-panel-form-group row-item-1-3">
+                    <label for="paint-opacity-input" class="form-label">Brightness</label>
+                    <input id="paint-opacity-input" class="input-block slider"
+                           type="range"
+                           min="0"
+                           max="100"
+                           value="100">
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Pixelpad Grid -->
+    <section id="grid-section" class="grid-section-visible">
+        <div id="grid-panel" class="full-height">
+            <div id="grid-container">                <table id="grid-table"></table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Masking Layer -->
+    <div id="masking-layer"></div>
+
+</main>
+
+<!-- Hydra -->
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/jquery-1.6.2.js"></script>
+<script src="js/faker.js"></script>
+<script src="js/tinycolor.js"></script>
+<script src="js/palette.js"></script>
+<script src="js/pixel-hydra.js"></script>
+<!-- End Hydra -->
+
+<script src="pixelpad/js/main.js"></script>

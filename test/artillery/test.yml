@@ -1,0 +1,20 @@
+config:
+  target: "http://localhost:3000"
+  processor: "./functions.js"
+  phases:
+    -
+      duration: 10
+      arrivalRate: 1
+scenarios:
+  -
+    engine: "socketio"
+    name: "join"
+    flow:
+      - function: "getVars"
+      - get:
+        url: "/"
+      - emit:
+            - channel: "playerLogin"
+              data: "{{username}}"
+            -
+              think: 1

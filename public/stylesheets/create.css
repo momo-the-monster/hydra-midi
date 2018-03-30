@@ -1,0 +1,129 @@
+#container {
+    background-image: url(../images/create/bg.jpg);
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.topbar {
+    margin:0 auto;
+    padding:2vw;
+}
+
+.topbar img {
+    max-width: 100%;
+}
+
+.app-title {
+    font-size:1.2em;
+    flex-grow: 1;
+}
+
+.sandwich-name {
+    font-size:15vw;
+    padding:3vw;
+    text-align: center;
+}
+
+.sandwich-top {
+    text-align:center;
+}
+
+.sandwich-top img {
+    max-width: 100%;
+}
+
+.sandwich {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    margin:0 auto;
+    padding:0 3vw;
+    justify-content: flex-start;
+}
+
+.sandwich select {
+    height: 10vh;
+    font-size: 1.5em;
+}
+
+.sandwich-bottom {
+    text-align:center;
+}
+
+.sandwich-bottom img{
+    max-width: 100%;
+}
+
+#sandwichSend {
+    margin: 10px;
+    font-size: 1.5em;
+    padding: 10px;
+}
+
+#sandwich-name {
+    font-size: 2em;
+    margin: 10px;
+    margin-bottom:30px;
+    padding:3px;
+}
+
+.ingredientList {
+    overflow-x: scroll;
+    display: flex;
+    max-height: 100px;
+    flex-direction: column;
+    flex-wrap: wrap;
+    overflow-y: hidden;
+    width: 100vw;
+}
+
+.ingredient {
+    position: relative;
+    width: 100vw;
+    margin-right: 100vw;
+}
+
+.ingredient img {
+    width: 100vw;
+}
+
+.ingredient .label {
+    font-size: 5vh;
+    display: block;
+    color: rgba(0, 0, 0, 1);
+    text-align: left;
+    position: absolute;
+    top:0;
+    left:0;
+    background-color: rgba(255,255,255,0.8);
+}
+
+
+.sandwich {
+    margin: 0 auto;
+}
+
+#username {
+    background-color: rgba(255,255,255,0.8);
+    padding: 10px 20px;
+    font-weight: bolder;
+    position: fixed;
+    color:black;
+    z-index: 2;
+    bottom: 0;
+    right: 0;
+}
+
+::-webkit-scrollbar {
+    display: none !important;
+}
+
+.create-page {
+    width: 100vw;
+}
+
+.submission {
+    position: fixed;
+    bottom: 0;
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="./style.css">
+	<title>Palette demo</title>
+</head>
+<body>
+<h1>Demo</h1>
+<div>
+	<h2 id="colorClicked">Click on a color</h2>
+</div>
+<script src="./palette.js"></script>
+<script type="text/javascript">
+Palette.prototype.click = function(color,name) {
+	if(typeof name !== "undefined")
+		document.getElementById('colorClicked').innerText = name + " " + color;
+	else
+		document.getElementById('colorClicked').innerText = color;
+};
+
+var palette = new Palette();
+palette.addColor("#7FDBFF","Aqua");
+palette.addColor("#39CCCC","Teal");
+palette.addColor("#2ECC40","Lime");
+palette.addColor("#FF4136","Red");
+palette.addColor("#FF851B","Orange");
+palette.addColor("#FFF14E","Yellow");
+palette.addColor("rgb(255, 193, 250)","Pink");
+palette.addColor("rgb(167, 161, 243)","Purple");
+palette.addColor("#DDDDDD","Silver");
+palette.appendTo(document.body);
+
+</script>
+</body>
+</html>

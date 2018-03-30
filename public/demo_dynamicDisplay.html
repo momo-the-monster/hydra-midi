@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="./style.css">
+	<title>Palette Dynamic</title>
+</head>
+<body>
+<h1>Demo</h1>
+<div>
+	<h2 id="colorClicked">Click on a color</h2>
+</div>
+<script src="./palette.js"></script>
+<script type="text/javascript">
+Palette.prototype.click = function(color,name) {
+	if(typeof name !== "undefined")
+		document.getElementById('colorClicked').innerText = name + " " + color;
+	else
+		document.getElementById('colorClicked').innerText = color;
+};
+
+var couleur = [
+		//gris
+			"rgb(99,94,75)",
+			"#28282D",
+		//violet
+			"#312C42",
+			"#5734C8",
+			"#8A70E3",
+			"#FF69F8",
+			"rgb(216,107,244)",
+			"rgb(232,115,240)",
+		//bleu
+			"#D7FFFE",
+			"rgb(217,247,239)",
+			"rgb(158,198,253)",
+			"#43F2FF",
+			"#39CCCC",
+			"rgb(25,184,236)",
+			"#5987FF",
+			"rgb(40,124,252)",
+			"rgb(23,83,240)",
+			"rgb(41,127,142)",
+			"rgb(31,48,63)",
+		//vert
+			"rgb(0,175,140)",
+			"rgb(37,213,175)",
+			"#49EF6B",
+			"#2ECC40",
+			"rgb(0,202,57)",
+			"#13C435",
+			"rgb(151,220,35)",
+			"rgb(97,140,24)",
+			"rgb(32,96,28)",
+			"#C8D734",
+		//jaune
+			"rgb(229,210,96)",
+			"#FFF413",
+			"rgb(215,164,52)",
+			"#FFB11E",
+		//orange
+			"rgb(251,194,159)",
+			"#FF9351",
+			"rgb(215,80,31)",
+		//saumon
+			"rgb(252,72,72)",
+			"#FF4350",
+		//rose
+			"#FF2970",
+			"rgb(239,19,92)",
+		//rouge
+			"rgb(230,43,56)"
+		];
+
+var palette = new Palette();
+palette.appendTo(document.body);
+palette.dim(50);
+palette._displayText = false;
+
+var compteur = 0;
+var dynamicload = setInterval(function(){
+	if(compteur == couleur.length)
+	{
+		clearInterval(dynamicload);
+	}
+	else
+	{
+		palette.addColor(couleur[compteur]);
+		compteur++;
+	}
+}, 150);
+
+
+</script>
+</body>
+</html>
