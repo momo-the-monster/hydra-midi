@@ -61,6 +61,17 @@ function initMidi(){
 
 }
 
+/*
+ MIDI_CHANNEL_MESSAGES: {
+ "noteoff": 0x8,           // 8
+ "noteon": 0x9,            // 9
+ "keyaftertouch": 0xA,     // 10
+ "controlchange": 0xB,     // 11
+ "channelmode": 0xB,       // 11
+ "programchange": 0xC,     // 12
+ "channelaftertouch": 0xD, // 13
+ "pitchbend": 0xE          // 14
+ */
 function toggleListenersForInput(value, input){
     if(value){
         // Register Listeners
@@ -73,10 +84,28 @@ function toggleListenersForInput(value, input){
             sendReleaseNote(e.note.number, 1);
             releaseNote(e.note.number, 1);
         });
+        input.addListener('controlchange', "all", function(e){
+       //     console.dir(e);
+            // number, channel, value
+            playControlChange(e.controller.number, e.channel, e.value);
+        })
     } else {
         // Remove Listeners
         input.removeListener('noteon');
         input.removeListener('noteoff');
+        input.removeListener('controlchange');
+    }
+}
+
+function playControlChange(number, channel, value){
+    let obj = midiOptions.liveOutputs;
+    // pass note-off to active outputs
+    for (var prop in obj) {
+        // skip loop if the property is from prototype
+        if(!obj.hasOwnProperty(prop)) continue;
+        // your code
+        let output = obj[prop];
+        output.sendControlChange(number,value);
     }
 }
 
