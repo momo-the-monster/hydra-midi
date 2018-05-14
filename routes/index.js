@@ -9,6 +9,10 @@ router.get('/view', function(req, res, next) {
     res.render('midi', { title: 'Hydra Midi' });
 });
 
+router.get('/mpe', function (req, res, next) {
+    res.render('mpe', {title: 'Hydra MPE'});
+});
+
 router.get(['/admin', '/host'], function(req, res, next) {
     res.render('host', { title: 'Hydra Admin' });
 });
